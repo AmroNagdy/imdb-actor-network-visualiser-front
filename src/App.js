@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
+import SearchBoxContainer from './components/search/SearchBoxContainer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        IMDb Actor Network Visualiser
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <div className="App">
+        <SearchBoxContainer />
+      </div>
+    );
+  }
 }
 
 export default App;
