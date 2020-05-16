@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { searchBoxSubmit } from '../../actions/search/searchBoxSubmit'
+import { connect } from 'react-redux';
+import { searchRequest as searchRequestAction } from '../../actions/search/searchRequest';
 
-export default function SearchBox(props) {
+function SearchBox(props) {
 
-  const dispatch = useDispatch();
-
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
+  const searchLimit = 10;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Submitting Name ${name}`);
-    dispatch(searchBoxSubmit(name));
+    props.searchRequest(name, searchLimit);
+    setName('');
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Frirst Name:
+        {'Search for actor name: '}
         <input
           type="text"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={event => setName(event.target.value)}
         />
       </label>
-      <input type="submit" value="Submit" />
+      <input type='submit' value='Search' />
     </form>
   );
 
-}
+};
+
+const mapDispatchToProps = dispatch => ({
+  searchRequest: (name, limit) => dispatch(searchRequestAction(name, limit))
+});
+
+export default connect(null, mapDispatchToProps)(SearchBox);

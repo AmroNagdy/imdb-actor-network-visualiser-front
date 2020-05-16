@@ -1,15 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import SearchResult from './SearchResult'
+import { connect } from 'react-redux';
+import SearchResultListItem from './SearchResultListItem';
 
-export default function SearchResultList() {
-
-  const searchResultList = useSelector(state => state.searchResultList);
+function SearchResultList(props) {
 
   return (
-    searchResultList.map(searchResult =>
-      <SearchResult entry={searchResult} />
-    )
+    <ul>
+      {props.searchResults.map(searchResult => <SearchResultListItem key={searchResult.id} props={searchResult} />)}
+    </ul>
   );
 
-}
+};
+
+const mapStateToProps = state => {
+  return {
+    searchResults: state.searchResultList.searchResults
+  };
+};
+
+export default connect(mapStateToProps)(SearchResultList);

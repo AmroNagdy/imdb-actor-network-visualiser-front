@@ -1,6 +1,7 @@
-export const searchBoxSubmit = (name) => {
-  return {
-    type: 'SUBMIT',
-    payload: name
+export const searchBoxSubmit = (name, limit) => ({
+  type: 'SEARCH_BY_NAME',
+  payload: {
+    name: name,
+    limit: limit
   }
-}
+});
