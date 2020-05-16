@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-export class SearchResult extends Component {
+const searchResultStyle = () => {
+  return {
+    background: '#f4f4f4',
+    padding: '10px',
+    borderBottom: '1px #ccc dotted'
+  };
+};
 
-  getStyle = () => {
-    return {
-      background: '#f4f4f4',
-      padding: '10px',
-      borderBottom: '1px #ccc dotted'
-    }
-  }
+export default function SearchResult(entry) {
 
-  render() {
-    return (
-      <div style={this.getStyle()}>
-        <p>
-          {this.props.searchResult.name}
-        </p>
-      </div>
-    )
-  }
+  return (
+    <div
+      style={searchResultStyle}>
+      <p> {entry.name} </p>
+    </div >
+  );
 
 }
-
-SearchResult.propTypes = {
-  searchResult: PropTypes.object.isRequired
-}
-
-export default SearchResult

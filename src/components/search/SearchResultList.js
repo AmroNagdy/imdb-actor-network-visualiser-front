@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import SearchResult from './SearchResult';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import SearchResult from './SearchResult'
 
-export class SearchResultList extends Component {
-    render() {
-        return (
-            this.props.searchResults.map((searchResult) =>
-                <SearchResult key={searchResult.id} searchResult={searchResult} />
-            )
-        )
-    }
+export default function SearchResultList() {
+
+  const searchResultList = useSelector(state => state.searchResultList);
+
+  return (
+    searchResultList.map(searchResult =>
+      <SearchResult entry={searchResult} />
+    )
+  );
+
 }
-
-SearchResultList.propTypes = {
-    searchResults: PropTypes.array.isRequired
-}
-
-export default SearchResultList

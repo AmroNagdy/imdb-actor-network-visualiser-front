@@ -1,36 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { searchBoxSubmit } from '../../actions/search/searchBoxSubmit'
 
-class SearchBox extends Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-  
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-  
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
+export default function SearchBox(props) {
+
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+
+  const handleSubmit = (event) => {
     event.preventDefault();
+    alert(`Submitting Name ${name}`);
+    dispatch(searchBoxSubmit(name));
   }
-  
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Frirst Name:
+        <input
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
 
 }
-
-export default SearchBox;

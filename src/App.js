@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import SearchBoxContainer from './components/search/SearchBoxContainer';
+import SearchBox from './components/search/SearchBox'
+import SearchResultList from './components/search/SearchResultList';
 
-class App extends Component {
+export default function App() {
 
-  render() {
-    return (
-      <div className="App">
-        <SearchBoxContainer />
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <SearchBox />
+      <SearchResultList />
+    </div>
+  );
+
 }
-
-export default App;
