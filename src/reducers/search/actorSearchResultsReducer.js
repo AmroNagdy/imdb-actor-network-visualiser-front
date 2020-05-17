@@ -1,26 +1,26 @@
-import { SEARCH_REQUEST_BEGIN, SEARCH_REQUEST_SUCCESS, SEARCH_REQUEST_FAILURE } from '../../actions/search/searchRequest';
+import { ACTOR_SEARCH_REQUEST_BEGIN, ACTOR_SEARCH_REQUEST_SUCCESS, ACTOR_SEARCH_REQUEST_FAILURE } from '../../actions/search/actorSearchRequest';
 
 const initialState = {
     searchResults: [],
     loading: false,
 };
 
-const searchResultListReducer = (state = initialState, action) => {
+const actorSearchResultsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SEARCH_REQUEST_BEGIN:
+        case ACTOR_SEARCH_REQUEST_BEGIN:
             return {
                 ...state,
-                loading: true,
+                loading: true
             };
 
-        case SEARCH_REQUEST_SUCCESS:
+        case ACTOR_SEARCH_REQUEST_SUCCESS:
             return {
                 ...state,
                 searchResults: action.payload.searchResults,
                 loading: false
             }
 
-        case SEARCH_REQUEST_FAILURE:
+        case ACTOR_SEARCH_REQUEST_FAILURE:
             return {
                 ...state,
                 searchResults: [],
@@ -32,4 +32,4 @@ const searchResultListReducer = (state = initialState, action) => {
     };
 };
 
-export default searchResultListReducer;
+export default actorSearchResultsReducer;

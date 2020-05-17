@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { searchRequest as searchRequestAction } from '../../actions/search/searchRequest';
+import actorSearchRequest from '../../actions/search/actorSearchRequest';
 
 function SearchBox(props) {
 
@@ -30,7 +30,7 @@ function SearchBox(props) {
 };
 
 const mapDispatchToProps = dispatch => ({
-  searchRequest: (name, limit) => dispatch(searchRequestAction(name, limit))
+  searchRequest: (name, limit) => dispatch(actorSearchRequest(name, limit))
 });
 
 export default connect(null, mapDispatchToProps)(SearchBox);

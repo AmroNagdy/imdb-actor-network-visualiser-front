@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import SearchBox from './components/search/SearchBox';
-import SearchResultList from './components/search/SearchResultList';
+import ActorSearchBox from './components/search/ActorSearchBox';
+import ActorSearchResultsList from './components/search/ActorSearchResultsList';
 import Network from './components/network/Network';
 
 export default function App() {
 
   return (
     <div className="App">
-      <SearchBox />
-      <SearchResultList />
+      <ActorSearchBox />
+      <ActorSearchResultsList />
       <Network />
     </div>
   );
