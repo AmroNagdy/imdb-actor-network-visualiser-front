@@ -14,23 +14,27 @@ function SearchBox(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={props.loading ? false : handleSubmit}>
       <label>
-        {'Search for actor name: '}
+        {'Lookup an actor by name '}
         <input
           type="text"
           value={name}
           onChange={event => setName(event.target.value)}
         />
       </label>
-      <input type='submit' value='Search' />
-    </form>
+      <input type='submit' value={props.loading ? 'Loading...' : 'Search'} />
+    </form >
   );
 
 };
+
+const mapStateToProps = state => ({
+  loading: state.actorSearchResults.loading
+});
 
 const mapDispatchToProps = dispatch => ({
   searchRequest: (name, limit) => dispatch(actorSearchRequest(name, limit))
 });
 
-export default connect(null, mapDispatchToProps)(SearchBox);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);

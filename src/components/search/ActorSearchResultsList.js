@@ -2,11 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ActorSearchResultListItem from './ActorSearchResultsListItem';
 
+const style = {
+  flexDirection: 'row',
+  alignItems: 'center'
+};
+
 function SearchResultList(props) {
 
   return (
-    <ul>
-      {props.searchResults.map(actorDetails => <ActorSearchResultListItem key={actorDetails.nconst} props={actorDetails} />)}
+    <ul style={style}>
+      {props.searchResults.map(actorDetails => <ActorSearchResultListItem key={actorDetails.nconst} actorDetails={actorDetails} />)}
     </ul>
   );
 

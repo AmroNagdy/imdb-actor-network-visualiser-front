@@ -5,12 +5,12 @@ import actorNetworkRequest from '../../actions/network/actorNetworkRequest';
 function ActorSearchResultsListItem(props) {
 
   const handleClick = () => {
-    props.networkRequest(props.props.nconst);
+    props.networkRequest(props.actorDetails.nconst);
   };
 
   return (
     <button onClick={handleClick}>
-      {props.props.primaryName}
+      {props.actorDetails.primaryName}
     </button>
   );
 
