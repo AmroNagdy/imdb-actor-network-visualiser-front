@@ -1,17 +1,22 @@
-import { BASE_URI, GET_NETWORK_BY_NCONST } from '../../rest-api/Constants';
+import { BASE_URI, GET_NETWORK_BY_NCONST } from '../../constants/RestApi';
 
-export const ACTOR_NETWORK_REQUEST_BEGIN = 'SEARCH_NETWORK_BEGIN';
-export const ACTOR_NETWORK_REQUEST_SUCCESS = 'SEARCH_NETWORK_SUCCESS';
-export const ACTOR_NETWORK_REQUEST_FAILURE = 'SEARCH_NETWORK_FAILURE';
+export const ACTOR_NETWORK_DISPLAY_NAMES_TOGGLE = 'ACTOR_NETWORK_DISPLAY_NAMES_TOGGLE';
+export const ACTOR_NETWORK_REQUEST_BEGIN = 'ACTOR_NETWORK_REQUEST_BEGIN';
+export const ACTOR_NETWORK_REQUEST_SUCCESS = 'ACTOR_NETWORK_REQUEST_SUCCESS';
+export const ACTOR_NETWORK_REQUEST_FAILURE = 'ACTOR_NETWORK_REQUEST_FAILURE';
+
+export const actorNetworkDisplayNamesToggle = () => ({
+  type: ACTOR_NETWORK_DISPLAY_NAMES_TOGGLE
+});
 
 export const actorNetworkRequestBegin = nconst => ({
   type: ACTOR_NETWORK_REQUEST_BEGIN,
   payload: { nconst }
 });
 
-export const actorNetworkRequestSuccess = network => ({
+export const actorNetworkRequestSuccess = networkData => ({
   type: ACTOR_NETWORK_REQUEST_SUCCESS,
-  payload: { network }
+  payload: { networkData }
 });
 
 export const actorNetworkRequestFailure = error => ({
@@ -27,7 +32,7 @@ const handleResponse = response => {
   return response.json();
 };
 
-const actorNetworkRequest = nconst => {
+export const actorNetworkRequest = nconst => {
   return dispatch => {
     dispatch(actorNetworkRequestBegin(nconst));
 
@@ -44,5 +49,3 @@ const actorNetworkRequest = nconst => {
       .catch(error => dispatch(actorNetworkRequestFailure(error)));
   };
 };
-
-export default actorNetworkRequest;

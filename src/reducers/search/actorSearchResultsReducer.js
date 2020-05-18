@@ -1,4 +1,4 @@
-import { ACTOR_SEARCH_REQUEST_BEGIN, ACTOR_SEARCH_REQUEST_SUCCESS, ACTOR_SEARCH_REQUEST_FAILURE } from '../../actions/search/actorSearchRequest';
+import * as Actions from '../../actions/search/actorSearchRequest';
 
 const initialState = {
     searchResults: [],
@@ -7,20 +7,20 @@ const initialState = {
 
 const actorSearchResultsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ACTOR_SEARCH_REQUEST_BEGIN:
+        case Actions.ACTOR_SEARCH_REQUEST_BEGIN:
             return {
                 ...state,
                 loading: true
             };
 
-        case ACTOR_SEARCH_REQUEST_SUCCESS:
+        case Actions.ACTOR_SEARCH_REQUEST_SUCCESS:
             return {
                 ...state,
                 searchResults: action.payload.searchResults,
                 loading: false
             }
 
-        case ACTOR_SEARCH_REQUEST_FAILURE:
+        case Actions.ACTOR_SEARCH_REQUEST_FAILURE:
             return {
                 ...state,
                 searchResults: [],

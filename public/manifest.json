@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "IMDb Visualiser",
+  "name": "IMDb Actor Network Visualiser",
   "icons": [
     {
       "src": "favicon.ico",

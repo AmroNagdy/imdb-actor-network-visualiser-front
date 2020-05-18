@@ -11,10 +11,11 @@ function SearchBox(props) {
     event.preventDefault();
     props.searchRequest(name, searchLimit);
     setName('');
+    return false;
   }
 
   return (
-    <form onSubmit={props.loading ? false : handleSubmit}>
+    <form onSubmit={props.loading ? () => false : handleSubmit}>
       <label>
         {'Lookup an actor by name '}
         <input

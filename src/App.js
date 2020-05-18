@@ -3,16 +3,18 @@ import Header from './components/header/Header';
 import ActorSearchBox from './components/search/ActorSearchBox';
 import ActorSearchResultsList from './components/search/ActorSearchResultsList';
 import Network from './components/network/Network';
+import { BLACK } from './constants/AppColours';
+import NetworkNameToggle from './components/network/NetworkNameToggle';
 
 const style = {
-  backgroundColor: '#070C09',
+  backgroundColor: BLACK,
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   color: 'white'
-};
+}
 
 export default function App() {
 
@@ -22,6 +24,7 @@ export default function App() {
       <ActorSearchBox />
       <ActorSearchResultsList />
       <Network />
+      <NetworkNameToggle />
     </div>
   );
 

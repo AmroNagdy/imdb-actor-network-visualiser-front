@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import ActorSearchResultListItem from './ActorSearchResultsListItem';
 
 const style = {
-  flexDirection: 'row',
-  alignItems: 'center'
+  marginLeft: '30px',
+  marginRight: '30px',
+  maxWidth: '40vw',
+  textAlign: 'center'
 };
 
 function SearchResultList(props) {

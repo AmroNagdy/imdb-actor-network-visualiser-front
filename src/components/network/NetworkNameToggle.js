@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actorNetworkRequest } from '../../actions/network/actorNetwork';
+import { actorNetworkDisplayNamesToggle } from '../../actions/network/actorNetwork';
 import { LIGHT_GRAY, DARK_GRAY } from '../../constants/AppColours';
 
 const style = {
@@ -11,28 +11,29 @@ const style = {
   textAlign: 'center',
   textCecoration: 'none',
   fontSize: '16px',
-  marginLeft: '5px',
-  marginRight: '5px',
-  marginBottom: '5px',
-  marginTop: '5px'
-};
+  marginBottom: '10px',
+}
 
-function ActorSearchResultsListItem(props) {
+function NameToggle(props) {
 
   const handleClick = () => {
-    props.networkRequest(props.actorDetails.nconst);
+    props.displayNamesToggle();
   };
 
   return (
     <button style={style} onClick={handleClick}>
-      {props.actorDetails.primaryName}
+      {'Toggle network names '.concat(props.displayNames ? 'off' : 'on')}
     </button>
   );
 
 };
 
-const mapDispatchToProps = dispatch => ({
-  networkRequest: nconst => dispatch(actorNetworkRequest(nconst))
+const mapStateToProps = state => ({
+  displayNames: state.actorNetwork.displayNames
 });
 
-export default connect(null, mapDispatchToProps)(ActorSearchResultsListItem);
+const mapDispatchToProps = dispatch => ({
+  displayNamesToggle: () => dispatch(actorNetworkDisplayNamesToggle())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NameToggle);
