@@ -5,7 +5,7 @@ import ActorSearchResultListItem from './ActorSearchResultsListItem';
 const style = {
   marginLeft: '30px',
   marginRight: '30px',
-  maxWidth: '40vw',
+  maxWidth: '60vw',
   textAlign: 'center'
 };
 

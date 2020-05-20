@@ -34,7 +34,7 @@ const actorSearchRequest = (name, limit) => {
     const params = { name: name, limit: limit };
     url.search = new URLSearchParams(params).toString();
 
-    return fetch(url, { credentials: 'same-origin' })
+    return fetch(url, { headers: new Headers({ 'Access-Control-Allow-Origin': '*' }) })
       .then(handleResponse)
       .then(json => {
         dispatch(actorSearchRequestSuccess(json));

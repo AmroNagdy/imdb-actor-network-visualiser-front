@@ -8,8 +8,6 @@ const initialState = {
 };
 
 const actorNetworkReducer = (state = initialState, action) => {
-  console.log(action);
-
   switch (action.type) {
     case Actions.ACTOR_NETWORK_REQUEST_BEGIN:
       return {
@@ -34,7 +32,6 @@ const actorNetworkReducer = (state = initialState, action) => {
       };
 
     case Actions.ACTOR_NETWORK_DISPLAY_NAMES_TOGGLE:
-      console.log('ACTOR_NETWORK_DISPLAY_NAMES_TOGGLE');
       return {
         ...state,
         displayNames: !state.displayNames

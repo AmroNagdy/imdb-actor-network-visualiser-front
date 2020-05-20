@@ -9,7 +9,7 @@ const style = {
   color: DARK_GRAY,
   padding: '15px 32px',
   textAlign: 'center',
-  textCecoration: 'none',
+  textDecoration: 'none',
   fontSize: '16px',
   marginLeft: '5px',
   marginRight: '5px',
