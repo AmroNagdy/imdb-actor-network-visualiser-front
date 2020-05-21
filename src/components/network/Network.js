@@ -7,8 +7,8 @@ const style = {
   marginLeft: '30px',
   marginRight: '30px',
   marginBottom: '30px',
-  minWidth: '75vw',
-  maxWidth: '75vw',
+  minWidth: '95vw',
+  maxWidth: '95vw',
   textAlign: 'center'
 };
 
@@ -104,7 +104,7 @@ function Network(props) {
 
   const networkRef = createRef();
   const width = 1000;
-  const height = 1000;
+  const height = 700;
 
   useEffect(() => {
     d3.select(networkRef.current).selectAll('*').remove();

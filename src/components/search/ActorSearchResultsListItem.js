@@ -1,21 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actorNetworkRequest } from '../../actions/network/actorNetwork';
-import { LIGHT_GRAY, DARK_GRAY } from '../../constants/AppColours';
-
-const style = {
-  backgroundColor: LIGHT_GRAY,
-  border: 'none',
-  color: DARK_GRAY,
-  padding: '15px 32px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  fontSize: '16px',
-  marginLeft: '5px',
-  marginRight: '5px',
-  marginBottom: '5px',
-  marginTop: '5px'
-};
+import Button from '../styles/Button';
 
 function ActorSearchResultsListItem(props) {
 
@@ -24,9 +10,9 @@ function ActorSearchResultsListItem(props) {
   };
 
   return (
-    <button style={style} onClick={handleClick}>
+    <Button onClick={handleClick}>
       {props.actorDetails.primaryName}
-    </button>
+    </Button>
   );
 
 };
