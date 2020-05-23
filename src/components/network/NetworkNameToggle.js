@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actorNetworkDisplayNamesToggle } from '../../actions/network/actorNetwork';
+import { actorNetworkDisplayNamesToggle } from '../../actions/network';
 import Button from '../styles/Button';
 
 function NameToggle(props) {
@@ -18,7 +18,7 @@ function NameToggle(props) {
 };
 
 const mapStateToProps = state => ({
-  displayNames: state.actorNetwork.displayNames
+  displayNames: state.network.displayNames
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actorNetworkRequest } from '../../actions/network/actorNetwork';
+import { actorNetworkRequest } from '../../actions/network';
 import Button from '../styles/Button';
 
 function ActorSearchResultsListItem(props) {

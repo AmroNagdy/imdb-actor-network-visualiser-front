@@ -5,7 +5,6 @@ const height = '20px';
 
 const Form = styled.form`
   input[type=text] {
-    // width: 100%;
     padding: ${height} 24px;
 
     background-color: transparent;

@@ -1,4 +1,4 @@
-import * as Actions from '../../actions/search/actorSearchRequest';
+import * as Actions from '../actions/searchRequest';
 
 const initialState = {
     searchResults: [],

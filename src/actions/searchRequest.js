@@ -1,4 +1,4 @@
-import { BASE_URI, SEARCH_ACTORS_BY_NAME } from '../../constants/RestApi';
+import { BASE_URI, SEARCH_ACTORS_BY_NAME } from '../constants/RestApi';
 
 export const ACTOR_SEARCH_REQUEST_BEGIN = 'SEARCH_REQUEST_BEGIN';
 export const ACTOR_SEARCH_REQUEST_SUCCESS = 'SEARCH_REQUEST_SUCCESS';

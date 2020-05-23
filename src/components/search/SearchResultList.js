@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ActorSearchResultListItem from './ActorSearchResultsListItem';
+import ActorSearchResultListItem from './SearchResultListItem';
 
 const style = {
   marginLeft: '30px',
@@ -20,7 +20,7 @@ function SearchResultList(props) {
 };
 
 const mapStateToProps = state => ({
-  searchResults: state.actorSearchResults.searchResults
+  searchResults: state.searchResult.searchResults
 });
 
 export default connect(mapStateToProps)(SearchResultList);

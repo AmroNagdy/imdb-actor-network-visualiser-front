@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import actorSearchResultsReducer from './search/actorSearchResultsReducer';
-import actorNetworkReducer from './network/actorNetworkReducer';
+import searchResultReducer from './searchResultReducer';
+import networkReducer from './networkReducer';
 
 const allReducers = combineReducers({
-  actorSearchResults: actorSearchResultsReducer,
-  actorNetwork: actorNetworkReducer
+  searchResult: searchResultReducer,
+  network: networkReducer
 });
 
 export default allReducers;

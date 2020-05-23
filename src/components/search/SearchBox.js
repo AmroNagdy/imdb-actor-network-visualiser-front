@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import actorSearchRequest from '../../actions/search/actorSearchRequest';
+import actorSearchRequest from '../../actions/searchRequest';
 import Form from '../styles/Form';
 
 function SearchBox(props) {
@@ -29,7 +29,7 @@ function SearchBox(props) {
 };
 
 const mapStateToProps = state => ({
-  loading: state.actorSearchResults.loading
+  loading: state.searchResult.loading
 });
 
 const mapDispatchToProps = dispatch => ({

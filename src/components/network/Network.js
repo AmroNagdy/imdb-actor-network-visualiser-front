@@ -123,10 +123,10 @@ function Network(props) {
 };
 
 const mapStateToProps = state => ({
-  activeNconst: state.actorNetwork.activeNconst,
-  networkData: state.actorNetwork.networkData,
-  loading: state.actorNetwork.loading,
-  displayNames: state.actorNetwork.displayNames
+  activeNconst: state.network.activeNconst,
+  networkData: state.network.networkData,
+  loading: state.network.loading,
+  displayNames: state.network.displayNames
 });
 
 export default connect(mapStateToProps)(Network);

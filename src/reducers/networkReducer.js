@@ -1,4 +1,4 @@
-import * as Actions from '../../actions/network/actorNetwork'
+import * as Actions from '../actions/network'
 
 const initialState = {
   activeNconst: '',

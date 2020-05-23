@@ -1,10 +1,11 @@
 import React from 'react';
 import Header from './components/header/Header';
-import ActorSearchBox from './components/search/ActorSearchBox';
-import ActorSearchResultsList from './components/search/ActorSearchResultsList';
+import SearchBox from './components/search/SearchBox';
+import SearchResultList from './components/search/SearchResultList';
 import Network from './components/network/Network';
 import { BLACK, WHITE } from './constants/AppColours';
 import NetworkNameToggle from './components/network/NetworkNameToggle';
+import Footer from './components/footer/Footer';
 
 const style = {
   backgroundColor: BLACK,
@@ -21,10 +22,11 @@ export default function App() {
   return (
     <div className="App" style={style}>
       <Header />
-      <ActorSearchBox />
-      <ActorSearchResultsList />
+      <SearchBox />
+      <SearchResultList />
       <Network />
       <NetworkNameToggle />
+      <Footer />
     </div>
   );
 

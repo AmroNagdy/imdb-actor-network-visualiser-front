@@ -3,6 +3,7 @@ import { WHITE } from '../../constants/AppColours';
 
 const H1 = styled.h1`
   align-self: center;
+  text-align: center;
   justify-self: center;
   color: ${WHITE};
   font-size: 4rem;

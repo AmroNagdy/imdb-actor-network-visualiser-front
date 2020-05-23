@@ -9,6 +9,7 @@ const Button = styled.button`
   border: 5px solid ${DARK_GRAY} !important;
   display: inline-block;
   transition: all 0.4s ease 0s;
+  font-size: 16px;
 
   &:hover {
     color: ${WHITE} !important;
