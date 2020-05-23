@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import actorSearchRequest from '../../actions/searchRequest';
-import Form from '../styles/Form';
+import FormStyle from '../styles/FormStyle';
 
 function SearchBox(props) {
 
@@ -16,14 +16,14 @@ function SearchBox(props) {
   }
 
   return (
-    <Form onSubmit={props.loading ? () => false : handleSubmit}>
+    <FormStyle onSubmit={props.loading ? () => false : handleSubmit}>
       <input
         type='text'
         value={name}
         onChange={event => setName(event.target.value)}
         placeholder='Lookup an actor 🔍'
       />
-    </Form >
+    </FormStyle>
   );
 
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { WHITE } from '../../constants/AppColours';
 
-const H1 = styled.h1`
+const H1Style = styled.h1`
   align-self: center;
   text-align: center;
   justify-self: center;
@@ -10,4 +10,4 @@ const H1 = styled.h1`
   text-shadow: 0px 2px 4px rgba(0,0,0,.4);
 `;
 
-export default H1;
+export default H1Style;

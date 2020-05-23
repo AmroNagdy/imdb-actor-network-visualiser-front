@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actorNetworkRequest } from '../../actions/network';
-import Button from '../styles/Button';
+import ButtonStyle from '../styles/ButtonStyle';
 
-function ActorSearchResultsListItem(props) {
+function SearchResultListItem(props) {
 
   const handleClick = () => {
     props.networkRequest(props.actorDetails.nconst);
   };
 
   return (
-    <Button onClick={handleClick}>
+    <ButtonStyle onClick={handleClick}>
       {props.actorDetails.primaryName}
-    </Button>
+    </ButtonStyle>
   );
 
 };
@@ -21,4 +21,4 @@ const mapDispatchToProps = dispatch => ({
   networkRequest: nconst => dispatch(actorNetworkRequest(nconst))
 });
 
-export default connect(null, mapDispatchToProps)(ActorSearchResultsListItem);
+export default connect(null, mapDispatchToProps)(SearchResultListItem);

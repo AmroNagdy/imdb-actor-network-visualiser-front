@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actorNetworkDisplayNamesToggle } from '../../actions/network';
-import Button from '../styles/Button';
+import ButtonStyle from '../styles/ButtonStyle';
 
 function NameToggle(props) {
 
@@ -10,9 +10,9 @@ function NameToggle(props) {
   };
 
   return (
-    <Button onClick={handleClick}>
+    <ButtonStyle onClick={handleClick}>
       {(props.displayNames ? 'Hide' : 'Show').concat(' network names')}
-    </Button>
+    </ButtonStyle>
   );
 
 };

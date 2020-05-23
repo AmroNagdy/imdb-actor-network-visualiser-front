@@ -7,7 +7,7 @@ const initialState = {
   displayNames: true
 };
 
-const actorNetworkReducer = (state = initialState, action) => {
+const networkReducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.ACTOR_NETWORK_REQUEST_BEGIN:
       return {
@@ -42,4 +42,4 @@ const actorNetworkReducer = (state = initialState, action) => {
   };
 };
 
-export default actorNetworkReducer;
+export default networkReducer;

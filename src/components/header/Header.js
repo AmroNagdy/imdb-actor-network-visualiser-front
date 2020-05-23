@@ -1,10 +1,10 @@
 import React from 'react';
-import H1 from '../styles/H1';
+import H1Style from '../styles/H1Style';
 
 export default function Header() {
 
   return (
-    <H1>IMDb Actor Network Visualiser</H1>
+    <H1Style>IMDb Actor Network Visualiser</H1Style>
   );
 
 };

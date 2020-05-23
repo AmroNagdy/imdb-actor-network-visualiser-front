@@ -2,15 +2,8 @@ import React, { createRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { GRAY, YELLOW, WHITE } from '../../constants/AppColours';
 import * as d3 from 'd3';
-
-const style = {
-  marginLeft: '30px',
-  marginRight: '30px',
-  marginBottom: '30px',
-  minWidth: '95vw',
-  maxWidth: '95vw',
-  textAlign: 'center'
-};
+import NetworkStyle from '../styles/NetworkStyle';
+import LoadingSpinner from './LoadingSpinner';
 
 function renderNetwork(networkRef, width, height, networkData, rootNconst, displayNames) {
   const svg = d3.select(networkRef.current)
@@ -115,8 +108,8 @@ function Network(props) {
   });
 
   return (
-    <div style={style} ref={networkRef}>
-      {props.loading ? 'Loading...' : ''}
+    <div style={{ margin: 'auto' }}>
+      {props.loading ? <LoadingSpinner /> : <NetworkStyle ref={networkRef} />}
     </div>
   );
 

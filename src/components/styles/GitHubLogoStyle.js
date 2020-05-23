@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { WHITE } from '../../constants/AppColours';
 
-const FooterLogo = styled.img`
+const GitHubLogoStyle = styled.img`
   filter: invert(1);
   height: auto; 
   width: auto; 
@@ -11,4 +10,4 @@ const FooterLogo = styled.img`
   padding-bottom: 10px;
 `;
 
-export default FooterLogo;
+export default GitHubLogoStyle;
