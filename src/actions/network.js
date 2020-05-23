@@ -40,7 +40,7 @@ export const actorNetworkRequest = nconst => {
     const params = { nconst: nconst };
     url.search = new URLSearchParams(params).toString();
 
-    return fetch(url, { credentials: 'same-origin' })
+    return fetch(url)
       .then(handleResponse)
       .then(json => {
         dispatch(actorNetworkRequestSuccess(json));
