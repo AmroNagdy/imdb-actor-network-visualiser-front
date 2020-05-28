@@ -2,13 +2,13 @@ import { GRAY, YELLOW, WHITE } from '../../constants/AppColours';
 import * as d3 from 'd3';
 import '../styles/NetworkNodeTooltip.css';
 
-const sortMoviesByYear = (movieA, movieB) => {
+const sortMoviesByYearDescending = (movieA, movieB) => {
   const [startYearA, startYearB] = [movieA.startYear, movieB.startYear];
 
   if (startYearA > startYearB) {
-    return 1;
-  } else if (startYearB > startYearA) {
     return -1;
+  } else if (startYearB > startYearA) {
+    return 1;
   } else {
     return 0;
   }
@@ -38,11 +38,29 @@ const drag = simulation => {
     .on('end', dragEnd);
 };
 
+const buildActorIdToMovieDetailsMap = (nodes, links) => new Map(
+  nodes.map(node => {
+    const id = node.id;
+    const relevantMovies = links
+      .filter(link => link.__proto__.source === id || link.__proto__.target === id)
+      .flatMap(link => link.__proto__.movies)
+      .sort(sortMoviesByYearDescending);
+
+    // Use a Set to remove duplicates.
+    const toString = movie => '<b>' + movie.primaryTitle + '</b> ' + movie.startYear + ' (' + movie.averageRating + ')';
+    const uniqueMovies = new Set(relevantMovies.map(movie => toString(movie)));
+
+    return [id, [...uniqueMovies].join('<br>')];
+  })
+);
+
 export default function renderNetwork(networkRef, networkData, rootId, displayNames) {
-  const links = networkData.links.map(link => Object.create(link));
   const nodes = networkData.nodes.map(node => Object.create(node));
-  const numberOfNodes = nodes.length;
-  const scaled = 2 * Math.log(numberOfNodes);
+  const links = networkData.links.map(link => Object.create(link));
+  const actorIdToMovieDetailsMap = buildActorIdToMovieDetailsMap(nodes, links);
+
+  // Scale network size according to the number of nodes.
+  const scaled = 2 * Math.log(nodes.length);
   const width = scaled * 170;
   const height = scaled * 130;
 
@@ -90,19 +108,6 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
     .attr('class', 'network-node-tooltip')
     .style('opacity', 0);
 
-  const buildTooltipHtml = d => {
-    const id = d.id;
-    const relevantLinks = links.filter(link => link.__proto__.source === id || link.__proto__.target === id)
-    const relevantMovies = relevantLinks
-      .flatMap(link => link.__proto__.movies)
-      .sort(sortMoviesByYear);
-
-    const toString = movie => '<b>' + movie.primaryTitle + '</b> ' + movie.startYear + ' (' + movie.averageRating + ')';
-    const uniqueMovies = new Set(relevantMovies.map(movie => toString(movie)));
-
-    return [...uniqueMovies].join('<br>');
-  };
-
   node
     .on('mouseover', function (d, i) {
       // Mouseover node dims the highlighted node slightly.
@@ -114,8 +119,8 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
       nodeTooltip.transition()
         .duration(50)
         .style('opacity', '.95');
-      nodeTooltip.html(buildTooltipHtml(d))
-        .style('left', (d3.event.pageX + 10) + 'px')
+      nodeTooltip.html(actorIdToMovieDetailsMap.get(d.id))
+        .style('left', (d3.event.pageX + 15) + 'px')
         .style('top', (d3.event.pageY - 15) + 'px');
     })
     .on('mouseout', function (d, i) {
