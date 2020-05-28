@@ -1,0 +1,12 @@
+div.network-node-tooltip {
+  position: absolute;
+  text-align: center;
+  padding: .5rem;
+  background: #F2F0F0;
+  color: #474747;
+  border: 1px solid #474747;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 12px;
+}

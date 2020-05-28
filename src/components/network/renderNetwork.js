@@ -1,11 +1,36 @@
 import { GRAY, YELLOW, WHITE } from '../../constants/AppColours';
 import * as d3 from 'd3';
+import '../styles/NetworkNodeTooltip.css';
 
-export default function renderNetwork(networkRef, networkData, rootNconst, displayNames) {
+const drag = simulation => {
+  const dragStart = d => {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  };
+
+  const drag = d => {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+  };
+
+  const dragEnd = d => {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  };
+
+  return d3.drag()
+    .on('start', dragStart)
+    .on('drag', drag)
+    .on('end', dragEnd);
+};
+
+export default function renderNetwork(networkRef, networkData, rootId, displayNames) {
   const links = networkData.links.map(link => Object.create(link));
   const nodes = networkData.nodes.map(node => Object.create(node));
   const numberOfNodes = nodes.length;
-  const scaled = Math.log(Math.pow(numberOfNodes, 2));
+  const scaled = 2 * Math.log(numberOfNodes);
   const width = scaled * 170;
   const height = scaled * 130;
 
@@ -27,30 +52,7 @@ export default function renderNetwork(networkRef, networkData, rootNconst, displ
     .force('charge', d3.forceManyBody().strength(strength))
     .force('center', d3.forceCenter(width / 2, height / 2));
 
-  const drag = simulation => {
-    const dragStart = d => {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    };
-
-    const drag = d => {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-    };
-
-    const dragEnd = d => {
-      if (!d3.event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    };
-
-    return d3.drag()
-      .on('start', dragStart)
-      .on('drag', drag)
-      .on('end', dragEnd);
-  };
-
+  // Build links.
   const link = svg.append('g')
     .attr('stroke', GRAY)
     .attr('stroke-opacity', linkOpacity)
@@ -59,6 +61,7 @@ export default function renderNetwork(networkRef, networkData, rootNconst, displ
     .join('line')
     .attr('stroke-width', d => Math.sqrt(d.weight));
 
+  // Build nodes.
   const node = svg.append('g')
     .attr('stroke', GRAY)
     .attr('stroke-width', nodeStrokeWidth)
@@ -66,21 +69,70 @@ export default function renderNetwork(networkRef, networkData, rootNconst, displ
     .data(nodes)
     .join('circle')
     .attr('r', nodeRadius)
-    .attr('fill', d => d.id === rootNconst ? YELLOW : WHITE)
+    .attr('fill', d => d.id === rootId ? YELLOW : WHITE)
     .call(drag(simulation));
 
-  node.append('title')
-    .text(d => d.name);
+  // Add mouseover effects to nodes.
+  const nodeTooltip = d3.select(networkRef.current)
+    .append('div')
+    .attr('class', 'network-node-tooltip')
+    .style('opacity', 0);
 
-  const text = displayNames ? svg.append('g')
-    .selectAll('text')
-    .data(nodes)
-    .join('text')
-    .text(d => d.name)
-    .attr('fill', WHITE)
-    .style('font-size', nameFontSize)
-    .call(drag(simulation)) : null;
+  const sortMoviesByYear = (movieA, movieB) => {
+    const [startYearA, startYearB] = [movieA.startYear, movieB.startYear];
 
+    if (startYearA > startYearB) {
+      return 1;
+    } else if (startYearB > startYearA) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  const buildTooltipHtml = d => {
+    const id = d.id;
+    const relevantLinks = links.filter(link => link.__proto__.source === id || link.__proto__.target === id)
+    const relevantMovies = relevantLinks
+      .flatMap(link => link.__proto__.movies)
+      .sort(sortMoviesByYear);
+
+    const toString = movie => '<b>' + movie.primaryTitle + '</b> ' + movie.startYear + ' (' + movie.averageRating + ')';
+    const uniqueMovies = new Set(relevantMovies.map(movie => toString(movie)));
+
+    return [...uniqueMovies].join('<br>');
+  };
+
+  node
+    .on('mouseover', (d, i) => {
+      // Mouseover node opens box to show what movies they have been in.
+      nodeTooltip.transition()
+        .duration(50)
+        .style('opacity', '.95');
+      nodeTooltip.html(buildTooltipHtml(d))
+        .style('left', (d3.event.pageX + 10) + 'px')
+        .style('top', (d3.event.pageY - 15) + 'px');
+    })
+    .on('mouseout', (d, i) => {
+      // Undo: mouseover node opens box to show what movies they have been in.
+      nodeTooltip.transition()
+        .duration('50')
+        .style('opacity', 0);
+    });
+
+  // Display names next to nodes if displayNames is true.
+  const text = displayNames ?
+    svg.append('g')
+      .selectAll('text')
+      .data(nodes)
+      .join('text')
+      .text(d => d.name)
+      .attr('fill', WHITE)
+      .style('font-size', nameFontSize)
+      .call(drag(simulation)) :
+    null;
+
+  // Render network.
   simulation.on('tick', () => {
     link
       .attr('x1', d => d.source.x)
