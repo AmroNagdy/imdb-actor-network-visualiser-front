@@ -11,7 +11,7 @@ function NameToggle(props) {
 
   return (
     <ButtonStyle onClick={handleClick}>
-      {(props.displayNames ? 'Hide' : 'Show').concat(' network names')}
+      {(props.displayNames ? 'Hide' : 'Show') + ' network names'}
     </ButtonStyle>
   );
 

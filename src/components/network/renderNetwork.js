@@ -2,6 +2,18 @@ import { GRAY, YELLOW, WHITE } from '../../constants/AppColours';
 import * as d3 from 'd3';
 import '../styles/NetworkNodeTooltip.css';
 
+const sortMoviesByYear = (movieA, movieB) => {
+  const [startYearA, startYearB] = [movieA.startYear, movieB.startYear];
+
+  if (startYearA > startYearB) {
+    return 1;
+  } else if (startYearB > startYearA) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
 const drag = simulation => {
   const dragStart = d => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -38,9 +50,9 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
   const strength = -300;
   const linkOpacity = 0.6;
   const nodeStrokeWidth = 1.5;
-  const nodeRadius = 5;
-  const nameFontSize = '12';
-  const nameTextYOffset = -10;
+  const nodeRadius = 6;
+  const nameFontSize = '14';
+  const nameTextYOffset = -12;
 
   const svg = d3.select(networkRef.current)
     .append('svg')
@@ -78,18 +90,6 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
     .attr('class', 'network-node-tooltip')
     .style('opacity', 0);
 
-  const sortMoviesByYear = (movieA, movieB) => {
-    const [startYearA, startYearB] = [movieA.startYear, movieB.startYear];
-
-    if (startYearA > startYearB) {
-      return 1;
-    } else if (startYearB > startYearA) {
-      return -1;
-    } else {
-      return 0;
-    }
-  };
-
   const buildTooltipHtml = d => {
     const id = d.id;
     const relevantLinks = links.filter(link => link.__proto__.source === id || link.__proto__.target === id)
@@ -104,7 +104,12 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
   };
 
   node
-    .on('mouseover', (d, i) => {
+    .on('mouseover', function (d, i) {
+      // Mouseover node dims the highlighted node slightly.
+      d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '.85');
+
       // Mouseover node opens box to show what movies they have been in.
       nodeTooltip.transition()
         .duration(50)
@@ -113,7 +118,12 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
         .style('left', (d3.event.pageX + 10) + 'px')
         .style('top', (d3.event.pageY - 15) + 'px');
     })
-    .on('mouseout', (d, i) => {
+    .on('mouseout', function (d, i) {
+      // Undo: mouseover node dims the highlighted node slightly.
+      d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '1');
+
       // Undo: mouseover node opens box to show what movies they have been in.
       nodeTooltip.transition()
         .duration('50')
