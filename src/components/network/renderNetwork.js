@@ -54,18 +54,22 @@ const buildActorIdToMovieDetailsMap = (nodes, links) => new Map(
   })
 );
 
+// Number of distinct movies is counted by HTML line breaks (<br>).
+const getNumberOfMoviesFromHtmlString = htmlString => (htmlString.match(/<br/g) || []).length;
+
 export default function renderNetwork(networkRef, networkData, rootId, displayNames) {
   const nodes = networkData.nodes.map(node => Object.create(node));
   const links = networkData.links.map(link => Object.create(link));
   const actorIdToMovieDetailsMap = buildActorIdToMovieDetailsMap(nodes, links);
+  const numberOfNodes = nodes.length;
 
   // Scale network size according to the number of nodes.
-  const scaled = 2 * Math.log(nodes.length);
+  const scaled = 2 * Math.log(numberOfNodes);
   const width = scaled * 170;
   const height = scaled * 130;
 
   // Network variables.
-  const strength = -300;
+  const strength = -350;
   const linkOpacity = 0.6;
   const nodeStrokeWidth = 1.5;
   const nodeRadius = 6;
@@ -108,6 +112,8 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
     .attr('class', 'network-node-tooltip')
     .style('opacity', 0);
 
+  const tooltipXOffset = 15;
+  const tooltipYOffset = -10;
   node
     .on('mouseover', function (d, i) {
       // Mouseover node dims the highlighted node slightly.
@@ -119,9 +125,21 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
       nodeTooltip.transition()
         .duration(50)
         .style('opacity', '.95');
-      nodeTooltip.html(actorIdToMovieDetailsMap.get(d.id))
-        .style('left', (d3.event.pageX + 15) + 'px')
-        .style('top', (d3.event.pageY - 15) + 'px');
+
+      const movieDetailsHtmlString = actorIdToMovieDetailsMap.get(d.id);
+      const numberOfMovies = getNumberOfMoviesFromHtmlString(movieDetailsHtmlString);
+
+      nodeTooltip.html(movieDetailsHtmlString)
+        .style('left', (d3.event.pageX + tooltipXOffset) + 'px')
+        .style('top', (d3.event.pageY + (tooltipYOffset + numberOfMovies)) + 'px');
+    })
+    .on('mousemove', function (d, i) {
+      const movieDetailsHtmlString = actorIdToMovieDetailsMap.get(d.id);
+      const numberOfMovies = getNumberOfMoviesFromHtmlString(movieDetailsHtmlString);
+
+      return nodeTooltip
+        .style('left', (d3.event.pageX + tooltipXOffset) + 'px')
+        .style('top', (d3.event.pageY + tooltipYOffset * numberOfMovies) + 'px');
     })
     .on('mouseout', function (d, i) {
       // Undo: mouseover node dims the highlighted node slightly.
