@@ -2,18 +2,6 @@ import { GRAY, YELLOW, WHITE } from '../../constants/AppColours';
 import * as d3 from 'd3';
 import '../styles/NetworkNodeTooltip.css';
 
-const sortMoviesByYearDescending = (movieA, movieB) => {
-  const [startYearA, startYearB] = [movieA.startYear, movieB.startYear];
-
-  if (startYearA > startYearB) {
-    return -1;
-  } else if (startYearB > startYearA) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
-
 const drag = simulation => {
   const dragStart = d => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -38,29 +26,17 @@ const drag = simulation => {
     .on('end', dragEnd);
 };
 
-const buildActorIdToMovieDetailsMap = (nodes, links) => new Map(
-  nodes.map(node => {
-    const id = node.id;
-    const relevantMovies = links
-      .filter(link => link.__proto__.source === id || link.__proto__.target === id)
-      .flatMap(link => link.__proto__.movies)
-      .sort(sortMoviesByYearDescending);
-
-    // Use a Set to remove duplicates.
-    const toString = movie => '<b>' + movie.primaryTitle + '</b> ' + movie.startYear + ' (' + movie.averageRating + ')';
-    const uniqueMovies = new Set(relevantMovies.map(movie => toString(movie)));
-
-    return [id, [...uniqueMovies].join('<br>')];
-  })
-);
-
-// Number of distinct movies is counted by HTML line breaks (<br>).
-const getNumberOfMoviesFromHtmlString = htmlString => (htmlString.match(/<br/g) || []).length;
+const movieToHtmlString = movie => '<b>' + movie.primaryTitle + '</b> ' + movie.startYear + ' (' + movie.averageRating + ')';
 
 export default function renderNetwork(networkRef, networkData, rootId, displayNames) {
   const nodes = networkData.nodes.map(node => Object.create(node));
   const links = networkData.links.map(link => Object.create(link));
-  const actorIdToMovieDetailsMap = buildActorIdToMovieDetailsMap(nodes, links);
+  const actorIdToMovieHtmlDetails = new Map(
+    Object.entries(networkData.actorIdToMovieDetailsMap)
+      .map(([id, movies]) => [id, movies.map(movie => movieToHtmlString(movie))])
+  );
+
+  console.log(actorIdToMovieHtmlDetails);
   const numberOfNodes = nodes.length;
 
   // Scale network size according to the number of nodes.
@@ -126,16 +102,16 @@ export default function renderNetwork(networkRef, networkData, rootId, displayNa
         .duration(50)
         .style('opacity', '.95');
 
-      const movieDetailsHtmlString = actorIdToMovieDetailsMap.get(d.id);
-      const numberOfMovies = getNumberOfMoviesFromHtmlString(movieDetailsHtmlString);
+      const movieDetailsHtmlString = actorIdToMovieHtmlDetails.get(d.id);
+      const numberOfMovies = movieDetailsHtmlString.length;
 
-      nodeTooltip.html(movieDetailsHtmlString)
+      nodeTooltip.html(movieDetailsHtmlString.join('<br>'))
         .style('left', (d3.event.pageX + tooltipXOffset) + 'px')
         .style('top', (d3.event.pageY + (tooltipYOffset + numberOfMovies)) + 'px');
     })
     .on('mousemove', function (d, i) {
-      const movieDetailsHtmlString = actorIdToMovieDetailsMap.get(d.id);
-      const numberOfMovies = getNumberOfMoviesFromHtmlString(movieDetailsHtmlString);
+      const movieDetailsHtmlString = actorIdToMovieHtmlDetails.get(d.id);
+      const numberOfMovies = movieDetailsHtmlString.length;
 
       return nodeTooltip
         .style('left', (d3.event.pageX + tooltipXOffset) + 'px')
