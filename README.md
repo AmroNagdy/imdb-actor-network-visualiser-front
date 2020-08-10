@@ -5,3 +5,5 @@ For this project I wanted to create a simple web application that visualises som
 
 # How To Use
 There are two ways to use this application. Either visit the website link above, or clone this repo and run `npm start` in the root folder.
+
+![IMDb Actor Network Visualiser example](https://github.com/AmroNagdy/AmroNagdy/blob/master/ProjectExamples/IMDb%20Actor%20Network%20Visualiser%20Example.png?raw=true)
